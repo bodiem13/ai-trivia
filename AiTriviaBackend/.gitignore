@@ -1,0 +1,48 @@
+# Build artifacts
+bin/
+obj/
+out/
+
+# Visual Studio / Rider / VSCode files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.idea/
+*.vscode/
+
+# Rider project files
+*.iml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# NuGet packages
+*.nupkg
+packages/
+.nuget/
+
+# Logs
+*.log
+
+# ASP.NET Core secrets (if you use Secret Manager)
+secrets.json
+
+# Temporary files
+*.tmp
+*.temp
+
+# Node/npm (if you later add a React frontend)
+node_modules/
+dist/
+
+# Coverage / Test results
+coverage/
+TestResults/
+*.coverage
+*.coveragexml
+
+# IIS / Debug
+launchSettings.json

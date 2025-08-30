@@ -13,7 +13,10 @@
       "generateClientClasses": true,
       "generateDtoTypes": true,
       "namespace": "Core.Users",
-      "output": "Generated/UserClient.cs"
+      "output": "Generated/UserClient.cs",
+      "additionalNamespaceUsages": [
+        "Core.QuestionAPI.Models"
+      ]
     }
   },
   "documentGenerator": {

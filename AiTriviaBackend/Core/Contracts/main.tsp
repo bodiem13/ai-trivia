@@ -1,16 +1,11 @@
 import "@typespec/http";
 
-@service(#{ title: "Main" })
-@tag("Main")
-namespace QuestionApi;
+// Import all APIs
+import "./QuestionAPI/models.tsp";
+import "./QuestionAPI/routes.tsp";
 
-model Question {
-  id: int32;
-  text: string;
-  options: string[];
-  correctAnswer: string;
-}
-
-@doc("Get a question by its ID")
-@route("/questions/{id}")
-op getQuestion(@path id: string): Question;
+/**
+ * Root service definition
+ */
+@service(#{ title: "APIs" })
+namespace APIs;

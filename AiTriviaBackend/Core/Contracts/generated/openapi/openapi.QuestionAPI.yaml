@@ -1,0 +1,59 @@
+openapi: 3.0.0
+info:
+  title: Question API
+  version: 0.0.0
+tags: []
+paths:
+  /questions:
+    get:
+      operationId: listQuestions
+      description: Get all questions
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Models.Question'
+  /questions/{id}:
+    get:
+      operationId: getQuestion
+      description: Get a question by its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Models.Question'
+components:
+  schemas:
+    Models.Question:
+      type: object
+      required:
+        - id
+        - text
+        - options
+        - correctAnswer
+      properties:
+        id:
+          type: integer
+          format: int32
+        text:
+          type: string
+        options:
+          type: array
+          items:
+            type: string
+        correctAnswer:
+          type: string

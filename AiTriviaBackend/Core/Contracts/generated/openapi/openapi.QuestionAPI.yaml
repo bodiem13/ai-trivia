@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Question API
+  title: QuestionAPI
   version: 0.0.0
 tags: []
 paths:
@@ -57,3 +57,4 @@ components:
             type: string
         correctAnswer:
           type: string
+      description: A trivia question.

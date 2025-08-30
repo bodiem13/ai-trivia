@@ -1,0 +1,24 @@
+{
+  "runtime": "Net90",
+  "codeGenerators": {
+    "openApiToCSharpClient": {
+      "className": "QuestionClient",
+      "generateClientClasses": true,
+      "generateDtoTypes": true,
+      "namespace": "Core.Questions",
+      "output": "Generated/QuestionClient.cs"
+    },
+    "openApiToCSharpClient:Users": {
+      "className": "UserClient",
+      "generateClientClasses": true,
+      "generateDtoTypes": true,
+      "namespace": "Core.Users",
+      "output": "Generated/UserClient.cs"
+    }
+  },
+  "documentGenerator": {
+    "fromDocument": {
+      "url": "openapi.yaml"
+    }
+  }
+}

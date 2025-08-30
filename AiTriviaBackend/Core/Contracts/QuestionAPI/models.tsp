@@ -1,4 +1,4 @@
-namespace API.QuestionAPI.Models {
+namespace QuestionAPI.Models {
 
     @doc("A trivia question.")
     model Question {

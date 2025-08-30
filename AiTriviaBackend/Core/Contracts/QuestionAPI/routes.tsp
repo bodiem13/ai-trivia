@@ -2,10 +2,11 @@ import "@typespec/http";
 import "./models.tsp";
 
 using Http;
-using API.QuestionAPI.Models;
+using QuestionAPI.Models;
 
+@service(#{ title: "QuestionAPI" })
 @route("/questions")
-namespace API.QuestionAPI.Routes {
+namespace QuestionAPI {
     /**
      * List all questions
      */

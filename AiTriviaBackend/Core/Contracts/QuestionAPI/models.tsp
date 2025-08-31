@@ -2,7 +2,8 @@ namespace QuestionAPI.Models {
 
     @doc("A trivia question.")
     model Question {
-    id: int32;
+    @format("uuid")
+    id: string;
     text: string;
     options: string[];
     correctAnswer: string;

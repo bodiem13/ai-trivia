@@ -9,7 +9,7 @@ https://typespec.io/
 
 
  ## Generate C# Clients
- - `nswag openapi2csclient /input:generated/openapi/openapi.QuestionAPI.yaml /output:generated/QuestionAPI/Clients/GeneratedCients.cs /namespace:Core.QuestionAPI.Clients /GenerateDtoTypes:false`
+ - `nswag openapi2csclient /input:generated/openapi/openapi.QuestionAPI.yaml /output:generated/QuestionAPI/GeneratedCients.cs /namespace:Core.QuestionAPI.Clients /GenerateDtoTypes:false /AdditionalNamespaceUsages:Core.QuestionAPI.Models`
 
 ## Generate C# Models
 - `nswag openapi2csclient /input:generated/openapi/openapi.QuestionAPI.yaml /output:generated/QuestionAPI/Models/GeneratedModels.cs /namespace:Core.QuestionAPI.Models /GenerateClientClasses:false`

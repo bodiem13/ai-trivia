@@ -1,4 +1,4 @@
-﻿using Core.Models;
+﻿using Core.QuestionAPI.Models;
 
 namespace QuestionService;
 

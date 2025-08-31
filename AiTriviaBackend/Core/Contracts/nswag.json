@@ -1,27 +1,35 @@
 {
   "runtime": "Net90",
+  "defaultVariables": null,
+  "documentGenerator": {
+    "fromDocument": {
+      "url": "generated/openapi/openapi.QuestionAPI.yaml"
+    }
+  },
   "codeGenerators": {
-    "openApiToCSharpClient": {
-      "className": "QuestionClient",
-      "generateClientClasses": true,
+    "QuestionModels": {
+      "className": "QuestionModels",
+      "generateClientClasses": false,
       "generateDtoTypes": true,
-      "namespace": "Core.Questions",
-      "output": "Generated/QuestionClient.cs"
+      "namespace": "Core.QuestionAPI.Models",
+      "useNamespaceForDto": true,
+      "output": "generated/QuestionAPI/GeneratedModels.cs",
+      "input": "generated/openapi/openapi.QuestionAPI.yaml"
     },
-    "openApiToCSharpClient:Users": {
-      "className": "UserClient",
+    "QuestionClient": {
+      "className": "QuestionApiClient",
       "generateClientClasses": true,
-      "generateDtoTypes": true,
-      "namespace": "Core.Users",
-      "output": "Generated/UserClient.cs",
+      "generateDtoTypes": false,
+      "namespace": "Core.QuestionAPI.Clients",
+      "output": "generated/QuestionAPI/Clients/GeneratedClient.cs",
+      "input": "generated/openapi/openapi.QuestionAPI.yaml",
+      "injectHttpClient": true,
+      "disposeHttpClient": true,
+      "useBaseUrl": true,
+      "generateOptionalParameters": true,
       "additionalNamespaceUsages": [
         "Core.QuestionAPI.Models"
       ]
-    }
-  },
-  "documentGenerator": {
-    "fromDocument": {
-      "url": "openapi.yaml"
     }
   }
 }

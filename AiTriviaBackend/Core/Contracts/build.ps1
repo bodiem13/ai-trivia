@@ -30,7 +30,7 @@ function Generate-Client {
         [string]$InputFile
     )
 
-    $ClientOutput = Join-Path $OutputDir "$ApiName/GeneratedClient.cs"
+    $ClientOutput = Join-Path $OutputDir "$ApiName/GeneratedClients.cs"
 
     Write-Host "Generating Client for $ApiName..."
     nswag openapi2csclient `

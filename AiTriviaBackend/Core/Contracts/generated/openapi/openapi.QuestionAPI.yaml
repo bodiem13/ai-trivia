@@ -38,6 +38,43 @@ paths:
                 $ref: '#/components/schemas/Models.Question'
 components:
   schemas:
+    Models.MultipleChoiceOption:
+      type: object
+      required:
+        - id
+        - text
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+      description: Multiple choice option
+    Models.MultipleChoiceQuestion:
+      type: object
+      required:
+        - question
+        - options
+        - correctAnswer
+      properties:
+        question:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/Models.MultipleChoiceOption'
+        correctAnswer:
+          $ref: '#/components/schemas/Models.MultipleChoiceOption'
+      description: Multiple choice question
+    Models.MultipleChoiceQuestionSet:
+      type: object
+      required:
+        - questions
+      properties:
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Models.MultipleChoiceQuestion'
+      description: Multiple choice question set
     Models.Question:
       type: object
       required:

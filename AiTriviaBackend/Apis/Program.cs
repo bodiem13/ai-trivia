@@ -1,9 +1,30 @@
+using OpenAI;
+using OpenAI.Chat;
+using QuestionService;
 using QuestionService.Handlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton(sp =>
+{
+    var apiKey = builder.Configuration["OpenAI:ApiKey"]
+                 ?? Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+
+    if (string.IsNullOrEmpty(apiKey))
+        throw new InvalidOperationException("Missing OpenAI API key");
+
+    return new ChatClient(AIQuestionServiceConstants.OpenAIModel, apiKey);
+});
+
 builder.Services.AddControllers();
 builder.Services.AddSingleton<QuestionHandler>();
+builder.Services.AddScoped<OpenAIQuestionGenerator>();
+builder.Services.AddScoped<AIQuestionService>();
+
+// Controllers & Swagger/OpenAPI
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddSwaggerGen(c =>
 {

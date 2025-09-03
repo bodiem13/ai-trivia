@@ -1,26 +1,13 @@
-﻿using Core.QuestionAPI.Models;
-using OpenAI;
-using OpenAI.Chat;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using OpenAI.Chat;
+using Core.QuestionAPI.Models;
 
 namespace QuestionService.Handlers
 {
-    using OpenAI;
-    using OpenAI.Chat;
-    using Core.QuestionAPI.Models;
-    using System.Text.Json;
-    using OpenAI.Responses;
-
-    public class QuestionGenerator
+    public class OpenAIQuestionGenerator : IOpenAIQuestionGenerator
     {
         private readonly ChatClient _chatClient;
 
-        public QuestionGenerator(ChatClient client)
+        public OpenAIQuestionGenerator(ChatClient client)
         {
             _chatClient = client;
         }

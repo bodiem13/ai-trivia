@@ -8,27 +8,18 @@ namespace Apis.QuestionAPI
     [Route("api/[controller]")]
     public class QuestionController : ControllerBase
     {
-        private readonly QuestionHandler _handler;
+        private readonly IQuestionHandler _questionHandler;
 
-        public QuestionController()
+        public QuestionController(IQuestionHandler questionHandler)
         {
-            _handler = new QuestionHandler(); // inject later for real DI
+            _questionHandler = questionHandler;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Question>> GetAll()
+        public ActionResult<Question> GetQuestion()
         {
-            return Ok(_handler.ListQuestions());
-        }
-
-        [HttpGet("{id}")]
-        public ActionResult<Question> Get(Guid id)
-        {
-            var question = _handler.GetQuestion(id);
-            if (question == null)
-                return NotFound();
-
-            return Ok(question);
+            var question = _questionHandler.LoadMultipleChoiceQuestionAsync("science", "easy").Result;
+            return question;
         }
     }
 }

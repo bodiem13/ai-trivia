@@ -1,41 +1,19 @@
 ﻿using Core.QuestionAPI.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuestionService.Handlers
 {
-    public class QuestionHandler
+    public class QuestionHandler : IQuestionHandler
     {
-        private readonly List<Question> _mockQuestions;
+        private readonly IOpenAIQuestionGenerator _openAIQuestionGenerator;
 
-        public QuestionHandler()
+        public QuestionHandler(IOpenAIQuestionGenerator openAIQuestionGenerator)
         {
-            // Initialize mock data
-            _mockQuestions = new List<Question>
-            {
-                new Question
-                {
-                    Id = Guid.NewGuid(),
-                    Text = "What is 2 + 2?",
-                    Options = new List<string> { "3", "4", "5" },
-                    CorrectAnswer = "4"
-                },
-                new Question
-                {
-                    Id = Guid.NewGuid(),
-                    Text = "What is the capital of France?",
-                    Options = new List<string> { "Paris", "London", "Berlin" },
-                    CorrectAnswer = "Paris"
-                }
-            };
+            _openAIQuestionGenerator = openAIQuestionGenerator;
         }
-
-        public IEnumerable<Question> ListQuestions() => _mockQuestions;
-
-        public Question GetQuestion(Guid id) =>
-            _mockQuestions.FirstOrDefault(q => q.Id == id);
+        public async Task<Question> LoadMultipleChoiceQuestionAsync(string topic, string difficulty)
+        {
+            var question = await _openAIQuestionGenerator.GenerateQuestionAsync(topic, difficulty);
+            return question;
+        }
     }
 }

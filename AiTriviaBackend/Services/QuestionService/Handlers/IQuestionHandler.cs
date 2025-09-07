@@ -5,14 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuestionService
+namespace QuestionService.Handlers
 {
-    public interface IQuestionService
+    public interface IQuestionHandler
     {
-        MultipleChoiceQuestion GetQuestion();
-
-        bool CheckAnswer(MultipleChoiceQuestion question, string answer);
-
         Task<MultipleChoiceQuestionSet> GetOrGenerateTodayQuestionAsync();
     }
 }

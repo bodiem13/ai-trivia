@@ -1,5 +1,6 @@
 ﻿using Core.QuestionAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using QuestionService;
 using QuestionService.Handlers;
 
 namespace Apis.QuestionAPI
@@ -8,27 +9,18 @@ namespace Apis.QuestionAPI
     [Route("api/[controller]")]
     public class QuestionController : ControllerBase
     {
-        private readonly QuestionHandler _handler;
+        private readonly IQuestionService _questionService;
 
-        public QuestionController()
+        public QuestionController(IQuestionService questionService)
         {
-            _handler = new QuestionHandler(); // inject later for real DI
+            _questionService = questionService;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<Question>> GetAll()
+        [HttpGet("today")]
+        public async Task<ActionResult<MultipleChoiceQuestionSet>> GetTodayQuestions()
         {
-            return Ok(_handler.ListQuestions());
-        }
-
-        [HttpGet("{id}")]
-        public ActionResult<Question> Get(Guid id)
-        {
-            var question = _handler.GetQuestion(id);
-            if (question == null)
-                return NotFound();
-
-            return Ok(question);
+            var questions = await _questionService.GetOrGenerateTodayQuestionAsync().ConfigureAwait(false);
+            return Ok(questions);
         }
     }
 }

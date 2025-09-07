@@ -22,6 +22,7 @@
 
 namespace Core.QuestionAPI.Clients
 {
+    using Core.QuestionAPI.Models;
     using System = global::System;
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -77,9 +78,9 @@ namespace Core.QuestionAPI.Clients
         /// </remarks>
         /// <returns>The request has succeeded.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Question>> ListQuestionsAsync()
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MultipleChoiceQuestion>> ListMultipleChoiceQuestionsAsync()
         {
-            return ListQuestionsAsync(System.Threading.CancellationToken.None);
+            return ListMultipleChoiceQuestionsAsync(System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -88,7 +89,7 @@ namespace Core.QuestionAPI.Clients
         /// </remarks>
         /// <returns>The request has succeeded.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Question>> ListQuestionsAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<MultipleChoiceQuestion>> ListMultipleChoiceQuestionsAsync(System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -129,7 +130,7 @@ namespace Core.QuestionAPI.Clients
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<Question>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<MultipleChoiceQuestion>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -161,9 +162,9 @@ namespace Core.QuestionAPI.Clients
         /// </remarks>
         /// <returns>The request has succeeded.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<Question> GetQuestionAsync(int id)
+        public virtual System.Threading.Tasks.Task<MultipleChoiceQuestion> GetMultipleChoiceQuestionAsync(int id)
         {
-            return GetQuestionAsync(id, System.Threading.CancellationToken.None);
+            return GetMultipleChoiceQuestionAsync(id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -172,7 +173,7 @@ namespace Core.QuestionAPI.Clients
         /// </remarks>
         /// <returns>The request has succeeded.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Question> GetQuestionAsync(int id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<MultipleChoiceQuestion> GetMultipleChoiceQuestionAsync(int id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -217,7 +218,7 @@ namespace Core.QuestionAPI.Clients
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<Question>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<MultipleChoiceQuestion>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);

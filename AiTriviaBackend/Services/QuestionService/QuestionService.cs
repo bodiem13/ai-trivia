@@ -1,21 +1,23 @@
 ﻿using Core.QuestionAPI.Models;
+using QuestionService.Handlers;
 
 namespace QuestionService;
 
 public class QuestionService
 {
-    public Question GetQuestion()
+    private readonly IQuestionHandler _questionHandler;
+    public QuestionService(IQuestionHandler questionHandler)
     {
-        return new Question
-        {
-            Text = "What is the capital of France?",
-            Options = new List<string> { "Paris", "Berlin", "Rome", "Madrid" },
-            CorrectAnswer = "Paris"
-        };
+        _questionHandler = questionHandler;
     }
 
-    public bool CheckAnswer(Question question, string answer)
+    public async Task<MultipleChoiceQuestionSet> GetOrGenerateTodayQuestionAsync()
     {
-        return question.CorrectAnswer.Equals(answer, StringComparison.OrdinalIgnoreCase);
+        return await _questionHandler.GetOrGenerateTodayQuestionAsync();
+    }
+
+    public bool CheckAnswer(MultipleChoiceQuestion question, string answer)
+    {
+        return question.CorrectAnswer.Text.Equals(answer, StringComparison.OrdinalIgnoreCase);
     }
 }

@@ -6,7 +6,7 @@ tags: []
 paths:
   /questions:
     get:
-      operationId: listQuestions
+      operationId: listMultipleChoiceQuestions
       description: Get all questions
       parameters: []
       responses:
@@ -17,10 +17,10 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Models.Question'
+                  $ref: '#/components/schemas/Models.MultipleChoiceQuestion'
   /questions/{id}:
     get:
-      operationId: getQuestion
+      operationId: getMultipleChoiceQuestion
       description: Get a question by its ID
       parameters:
         - name: id
@@ -35,7 +35,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Models.Question'
+                $ref: '#/components/schemas/Models.MultipleChoiceQuestion'
 components:
   schemas:
     Models.MultipleChoiceOption:
@@ -52,10 +52,15 @@ components:
     Models.MultipleChoiceQuestion:
       type: object
       required:
+        - id
         - question
         - options
         - correctAnswer
+        - type
       properties:
+        id:
+          type: string
+          format: uuid
         question:
           type: string
         options:
@@ -64,6 +69,8 @@ components:
             $ref: '#/components/schemas/Models.MultipleChoiceOption'
         correctAnswer:
           $ref: '#/components/schemas/Models.MultipleChoiceOption'
+        type:
+          $ref: '#/components/schemas/Models.MultipleChoiceQuestionType'
       description: Multiple choice question
     Models.MultipleChoiceQuestionSet:
       type: object
@@ -75,23 +82,9 @@ components:
           items:
             $ref: '#/components/schemas/Models.MultipleChoiceQuestion'
       description: Multiple choice question set
-    Models.Question:
-      type: object
-      required:
-        - id
-        - text
-        - options
-        - correctAnswer
-      properties:
-        id:
-          type: string
-          format: uuid
-        text:
-          type: string
-        options:
-          type: array
-          items:
-            type: string
-        correctAnswer:
-          type: string
-      description: A trivia question.
+    Models.MultipleChoiceQuestionType:
+      type: string
+      enum:
+        - Standard
+        - Opinion
+      description: Question type for multiple choice questions

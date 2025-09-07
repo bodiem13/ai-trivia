@@ -1,14 +1,12 @@
 ﻿using OpenAI.Chat;
 using Core.QuestionAPI.Models;
-using QuestionService.Helpers;
 
 namespace QuestionService.Handlers
 {
-    public class QuestionGenerator
+    public class OpenAIQuestionGenerator : IOpenAIQuestionGenerator
     {
         private readonly ChatClient _chatClient;
         private readonly IOpenAIChatMessageHelper _chatMessageHelper;
-
         public QuestionGenerator(ChatClient client, IOpenAIChatMessageHelper chatMessageHelper)
         {
             _chatClient = client;

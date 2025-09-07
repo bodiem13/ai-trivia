@@ -9,18 +9,18 @@ namespace Apis.QuestionAPI
     [Route("api/[controller]")]
     public class QuestionController : ControllerBase
     {
-        private readonly IQuestionService _questionService;
+        private readonly IQuestionHandler _questionHandler;
 
-        public QuestionController(IQuestionService questionService)
+        public QuestionController(IQuestionHandler questionHandler)
         {
-            _questionService = questionService;
+            _questionHandler = questionHandler;
         }
 
-        [HttpGet("today")]
-        public async Task<ActionResult<MultipleChoiceQuestionSet>> GetTodayQuestions()
+        [HttpGet]
+        public ActionResult<Question> GetQuestion()
         {
-            var questions = await _questionService.GetOrGenerateTodayQuestionAsync().ConfigureAwait(false);
-            return Ok(questions);
+            var question = _questionHandler.LoadMultipleChoiceQuestionAsync("science", "easy").Result;
+            return question;
         }
     }
 }

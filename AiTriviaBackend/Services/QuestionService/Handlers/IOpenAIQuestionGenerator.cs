@@ -4,6 +4,6 @@ namespace QuestionService.Handlers
 {
     public interface IOpenAIQuestionGenerator
     {
-        Task<Question> GenerateQuestionAsync(string topic, string difficulty);
+        Task<MultipleChoiceQuestionSet> GenerateMultipleChoiceQuestionSetAsync(MultipleChoiceQuestionType questionType, string topic, string difficulty, int questionCount);
     }
 }

@@ -4,6 +4,6 @@ namespace QuestionService.Handlers
 {
     public interface IQuestionHandler
     {
-        Task<Question> LoadMultipleChoiceQuestionAsync(string topic, string difficulty);
+        Task<MultipleChoiceQuestionSet> GetOrGenerateTodayQuestionAsync();
     }
 }

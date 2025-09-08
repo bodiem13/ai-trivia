@@ -4,10 +4,8 @@ namespace QuestionService
 {
     public interface IAIQuestionService
     {
-        MultipleChoiceQuestion GetQuestion();
+        Task<MultipleChoiceQuestionSet> GetOrGenerateTodayQuestionAsync();
 
         bool CheckAnswer(MultipleChoiceQuestion question, string answer);
-
-        Task<MultipleChoiceQuestionSet> GetOrGenerateTodayQuestionAsync();
     }
 }

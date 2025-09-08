@@ -4,15 +4,15 @@ namespace QuestionService.Handlers
 {
     public class QuestionHandler : IQuestionHandler
     {
-        private readonly IQuestionGenerator _questionGenerator;
+        private readonly IOpenAIQuestionGenerator _openAIQuestionGenerator;
         private readonly string _mockCategory;
         private readonly string _mockDifficulty;
         private readonly int _mockQuestionCount;
         private readonly int _mockOpinionQuestionCount;
 
-        public QuestionHandler(IQuestionGenerator questionGenerator)
+        public QuestionHandler(IOpenAIQuestionGenerator openAIQuestionGenerator)
         {
-            _questionGenerator = questionGenerator;
+            _openAIQuestionGenerator = openAIQuestionGenerator;
             _mockCategory = "Sports";
             _mockDifficulty = "Easy";
             _mockQuestionCount = 3;
@@ -22,8 +22,8 @@ namespace QuestionService.Handlers
         public async Task<MultipleChoiceQuestionSet> GetOrGenerateTodayQuestionAsync()
         {
             // TODO add category generator
-            var standardQuestions = await _questionGenerator.GenerateMultipleChoiceQuestionSetAsync(MultipleChoiceQuestionType.Standard, _mockCategory, _mockDifficulty, _mockQuestionCount);
-            var opinionQuestion = await _questionGenerator.GenerateMultipleChoiceQuestionSetAsync(MultipleChoiceQuestionType.Opinion, _mockCategory, _mockDifficulty, _mockOpinionQuestionCount);
+            var standardQuestions = await _openAIQuestionGenerator.GenerateMultipleChoiceQuestionSetAsync(MultipleChoiceQuestionType.Standard, _mockCategory, _mockDifficulty, _mockQuestionCount);
+            var opinionQuestion = await _openAIQuestionGenerator.GenerateMultipleChoiceQuestionSetAsync(MultipleChoiceQuestionType.Opinion, _mockCategory, _mockDifficulty, _mockOpinionQuestionCount);
 
             return new MultipleChoiceQuestionSet
             {

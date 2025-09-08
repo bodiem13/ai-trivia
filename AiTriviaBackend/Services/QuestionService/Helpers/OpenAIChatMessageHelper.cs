@@ -15,9 +15,11 @@ namespace QuestionService.Helpers
                     "  questions: MultipleChoiceQuestion[]\n" +
                     "}\n" +
                     "MultipleChoiceQuestion = {\n" +
+                    "  id: string (uuid),\n" +
                     "  question: string,\n" +
                     "  options: MultipleChoiceOption[],\n" +
-                    "  correctAnswer: MultipleChoiceOption\n" +
+                    "  correctAnswer: MultipleChoiceOption,\n" +
+                    "  type: 'Standard'\n" +
                     "}\n" +
                     "MultipleChoiceOption = {\n" +
                     "  id: string, // e.g., 'A', 'B', 'C', 'D'\n" +
@@ -25,8 +27,10 @@ namespace QuestionService.Helpers
                     "}\n" +
                     "Rules:\n" +
                     "1. Always provide exactly 4 options per question.\n" +
-                    "2. Correct answer must match one of the options.\n" +
-                    "3. Output only valid JSON, no extra commentary."
+                    "2. Correct answer must exactly match one of the provided options.\n" +
+                    "3. Use a valid UUID for each question's id.\n" +
+                    "4. Set type to 'Standard'.\n" +
+                    "5. Output only valid JSON, no extra commentary."
                 ),
                 ChatMessage.CreateUserMessage($"Generate a {category} trivia question with difficulty {difficulty}.")
             };
@@ -38,15 +42,17 @@ namespace QuestionService.Helpers
             var messages = new List<ChatMessage>
             {
                 ChatMessage.CreateSystemMessage(
-                    "You are a trivia generator. " +
+                    "You are a trivia generator for AI-opinion-based questions. " +
                     "Always return JSON strictly matching this schema:\n" +
                     "MultipleChoiceQuestionSet = {\n" +
                     "  questions: MultipleChoiceQuestion[]\n" +
                     "}\n" +
                     "MultipleChoiceQuestion = {\n" +
+                    "  id: string (uuid),\n" +
                     "  question: string,\n" +
                     "  options: MultipleChoiceOption[],\n" +
-                    "  correctAnswer: MultipleChoiceOption\n" +
+                    "  correctAnswer: MultipleChoiceOption,\n" +
+                    "  type: 'Opinion'\n" +
                     "}\n" +
                     "MultipleChoiceOption = {\n" +
                     "  id: string, // e.g., 'A', 'B', 'C', 'D'\n" +
@@ -54,9 +60,10 @@ namespace QuestionService.Helpers
                     "}\n" +
                     "Rules:\n" +
                     "1. Always provide exactly 4 options per question.\n" +
-                    "2. Correct answer must match one of the options.\n" +
-                    "3. Output only valid JSON, no extra commentary.\n" +
-                    "4. This is an opinion-based question, craft a fun or imaginative question where the 'correct' answer is AI-generated but still plausible."
+                    "2. The correctAnswer must reflect the option the AI believes is the best or most likely answer (it is subjective).\n" +
+                    "3. Use a valid UUID for each question's id.\n" +
+                    "4. Set type to 'Opinion'.\n" +
+                    "5. Output only valid JSON, no extra commentary."
                 ),
                 ChatMessage.CreateUserMessage(
                     $"Generate an opinion-based {category} trivia question. " +

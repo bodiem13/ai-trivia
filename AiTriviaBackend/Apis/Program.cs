@@ -2,24 +2,31 @@ using OpenAI;
 using OpenAI.Chat;
 using QuestionService;
 using QuestionService.Handlers;
+using QuestionService.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton(sp =>
+builder.Services.AddSingleton<ChatClient>(sp =>
 {
-    var apiKey = builder.Configuration["OpenAI:ApiKey"]
-                 ?? Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-
-    if (string.IsNullOrEmpty(apiKey))
-        throw new InvalidOperationException("Missing OpenAI API key");
-
+    var apiKey = builder.Configuration["OPENAI_API_KEY"]; // from secrets
     return new ChatClient(AIQuestionServiceConstants.OpenAIModel, apiKey);
 });
 
+if (builder.Environment.IsDevelopment())
+{
+    // Use mock generator in development
+    builder.Services.AddScoped<IOpenAIQuestionGenerator, MockOpenAIQuestionGenerator>();
+}
+else
+{
+    // Use real OpenAI generator in production
+    builder.Services.AddScoped<IOpenAIQuestionGenerator, OpenAIQuestionGenerator>();
+}
+
 builder.Services.AddControllers();
-builder.Services.AddSingleton<QuestionHandler>();
-builder.Services.AddScoped<OpenAIQuestionGenerator>();
-builder.Services.AddScoped<AIQuestionService>();
+builder.Services.AddScoped<IOpenAIChatMessageHelper, OpenAIChatMessageHelper>();
+builder.Services.AddScoped<IQuestionHandler,QuestionHandler>();
+builder.Services.AddScoped<IAIQuestionService, AIQuestionService>();
 
 // Controllers & Swagger/OpenAPI
 builder.Services.AddControllers();
@@ -39,7 +46,7 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();             // must come after AddSwaggerGen
+    app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Question API V1");

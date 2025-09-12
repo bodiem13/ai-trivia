@@ -21,8 +21,11 @@ Thumbs.db
 
 # NuGet packages
 *.nupkg
-packages/
+**/packages/*/
 .nuget/
+
+# UI Packages
+!ai-trivia-ui/packages/
 
 # Logs
 *.log

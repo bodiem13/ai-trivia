@@ -28,3 +28,5 @@ Generate-Client -ApiName "<NewAPI>" -InputFile $newApiYaml
 ```
 4. Run `.\build.ps1`
 
+5. Run `node openapi-gen.js` to generate TS models
+

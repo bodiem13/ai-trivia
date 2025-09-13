@@ -12,7 +12,7 @@ namespace QuestionAPI {
      */
     @get
     @doc("Get all questions")
-    op listMultipleChoiceQuestions(): MultipleChoiceQuestion[];
+    op listMultipleChoiceQuestions(): MultipleChoiceQuestionSet;
 
     /**
      * Get one question by ID

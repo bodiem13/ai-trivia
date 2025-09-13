@@ -6,7 +6,7 @@ using QuestionService.Handlers;
 namespace Apis.QuestionAPI
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/questions")]
     public class QuestionController : ControllerBase
     {
         private readonly IAIQuestionService _aiQuestionService;

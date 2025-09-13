@@ -15,9 +15,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Models.MultipleChoiceQuestion'
+                $ref: '#/components/schemas/Models.MultipleChoiceQuestionSet'
   /questions/{id}:
     get:
       operationId: getMultipleChoiceQuestion

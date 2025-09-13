@@ -12,6 +12,18 @@ builder.Services.AddSingleton<ChatClient>(sp =>
     return new ChatClient(AIQuestionServiceConstants.OpenAIModel, apiKey);
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy
+                .WithOrigins("http://localhost:3000") // Your Next.js dev URL
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
 if (builder.Environment.IsDevelopment())
 {
     // Use mock generator in development
@@ -53,6 +65,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseCors("AllowFrontend");
 app.UseHttpsRedirection();
 app.MapControllers();  // map controller routes
 

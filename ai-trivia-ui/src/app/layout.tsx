@@ -1,4 +1,6 @@
-import { AppProviders } from "./providers";
+// Wrap all pages and components in AppProviders
+
+import { AppProviders } from "./providers/AppProvider";
 
 export const metadata = {
   title: "AI Trivia",
@@ -9,7 +11,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        {/* Wrap all children in providers */}
         <AppProviders>
           {children}
         </AppProviders>

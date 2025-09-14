@@ -92,6 +92,24 @@ namespace Core.QuestionAPI.Models
     }
 
     /// <summary>
+    /// Difficulty for trivia questions
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum MultipleChoiceQuestionDifficulty
+    {
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Easy")]
+        Easy = 0,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Medium")]
+        Medium = 1,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Hard")]
+        Hard = 2,
+
+    }
+
+    /// <summary>
     /// Multiple choice question set
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.5.0.0 (NJsonSchema v11.4.0.0 (Newtonsoft.Json v13.0.0.0))")]

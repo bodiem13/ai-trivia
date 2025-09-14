@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { Models_MultipleChoiceQuestion } from '../models/Models_MultipleChoiceQuestion';
+import type { Models_MultipleChoiceQuestionDifficulty } from '../models/Models_MultipleChoiceQuestionDifficulty';
 import type { Models_MultipleChoiceQuestionSet } from '../models/Models_MultipleChoiceQuestionSet';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -13,10 +14,20 @@ export class DefaultService {
      * @returns Models_MultipleChoiceQuestionSet The request has succeeded.
      * @throws ApiError
      */
-    public static listMultipleChoiceQuestions(): CancelablePromise<Models_MultipleChoiceQuestionSet> {
+    public static listMultipleChoiceQuestions({
+        difficulty,
+        category,
+    }: {
+        difficulty?: Models_MultipleChoiceQuestionDifficulty,
+        category?: string,
+    }): CancelablePromise<Models_MultipleChoiceQuestionSet> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/questions',
+            query: {
+                'difficulty': difficulty,
+                'category': category,
+            },
         });
     }
     /**

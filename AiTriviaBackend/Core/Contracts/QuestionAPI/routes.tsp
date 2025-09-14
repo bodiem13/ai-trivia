@@ -12,7 +12,10 @@ namespace QuestionAPI {
      */
     @get
     @doc("Get all questions")
-    op listMultipleChoiceQuestions(): MultipleChoiceQuestionSet;
+    op listMultipleChoiceQuestions(
+        @query difficulty?: Models.MultipleChoiceQuestionDifficulty,
+        @query category?: string
+    ): MultipleChoiceQuestionSet;
 
     /**
      * Get one question by ID

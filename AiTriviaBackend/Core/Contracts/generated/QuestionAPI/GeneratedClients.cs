@@ -78,9 +78,9 @@ namespace Core.QuestionAPI.Clients
         /// </remarks>
         /// <returns>The request has succeeded.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<MultipleChoiceQuestionSet> ListMultipleChoiceQuestionsAsync()
+        public virtual System.Threading.Tasks.Task<MultipleChoiceQuestionSet> ListMultipleChoiceQuestionsAsync(MultipleChoiceQuestionDifficulty? difficulty, string category)
         {
-            return ListMultipleChoiceQuestionsAsync(System.Threading.CancellationToken.None);
+            return ListMultipleChoiceQuestionsAsync(difficulty, category, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -89,7 +89,7 @@ namespace Core.QuestionAPI.Clients
         /// </remarks>
         /// <returns>The request has succeeded.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<MultipleChoiceQuestionSet> ListMultipleChoiceQuestionsAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<MultipleChoiceQuestionSet> ListMultipleChoiceQuestionsAsync(MultipleChoiceQuestionDifficulty? difficulty, string category, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -104,6 +104,16 @@ namespace Core.QuestionAPI.Clients
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "questions"
                     urlBuilder_.Append("questions");
+                    urlBuilder_.Append('?');
+                    if (difficulty != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("difficulty")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(difficulty, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (category != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("category")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(category, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 

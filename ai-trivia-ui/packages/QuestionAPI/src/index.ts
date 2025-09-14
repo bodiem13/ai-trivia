@@ -9,6 +9,7 @@ export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { Models_MultipleChoiceOption } from './models/Models_MultipleChoiceOption';
 export type { Models_MultipleChoiceQuestion } from './models/Models_MultipleChoiceQuestion';
+export { Models_MultipleChoiceQuestionDifficulty } from './models/Models_MultipleChoiceQuestionDifficulty';
 export type { Models_MultipleChoiceQuestionSet } from './models/Models_MultipleChoiceQuestionSet';
 export { Models_MultipleChoiceQuestionType } from './models/Models_MultipleChoiceQuestionType';
 

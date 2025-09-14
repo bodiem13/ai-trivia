@@ -19,7 +19,9 @@ namespace Apis.QuestionAPI
         }
 
         [HttpGet]
-        public ActionResult<MultipleChoiceQuestionSet> GetQuestion()
+        public ActionResult<MultipleChoiceQuestionSet> GetQuestion(
+            [FromQuery] string? difficulty,
+            [FromQuery] string? category)
         {
             var question = _aiQuestionService.GetOrGenerateTodayQuestionAsync().Result;
             return question;

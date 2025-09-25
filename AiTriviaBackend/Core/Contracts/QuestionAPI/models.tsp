@@ -25,4 +25,11 @@ namespace QuestionAPI.Models {
     standard: "Standard",
     opinion: "Opinion"
     }
+
+    @doc("Difficulty for trivia questions")
+    enum MultipleChoiceQuestionDifficulty {
+        easy: "Easy",
+        medium: "Medium",
+        hard: "Hard"
+    }
 }

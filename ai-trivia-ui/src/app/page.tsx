@@ -1,35 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { DefaultService, Models_MultipleChoiceQuestionSet } from '../../packages/QuestionAPI/src';
-import QuestionList from "@/components/QuestionList";
+import { useState } from "react";
+import styles from "./page.module.css";
+import { Models_MultipleChoiceQuestionDifficulty as Difficulty } from "../../packages/QuestionAPI/src";
+import HomeScreen from "@/screens/HomeScreen/HomeScreen";
+import QuizScreen from "@/screens/QuizScreen/QuizScreen";
 
-export default function HomePage() {
-  const [questions, setQuestions] = useState<Models_MultipleChoiceQuestionSet | null>(null);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const result = await DefaultService.listMultipleChoiceQuestions(); // 🚀 your backend call
-        setQuestions(result);
-      } catch (error) {
-        console.error("Failed to fetch questions", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+export default function Page() {
+  const [gameState, setGameState] = useState<"home" | "quiz">("home");
+  const [difficulty, setDifficulty] = useState<string | null>(null);
 
-    fetchQuestions();
-  }, []);
-
-  if (loading) return <div>Loading questions...</div>;
-  if (!questions) return <div>No questions found.</div>;
+  const selectDifficulty = (selected: Difficulty) => {
+    setDifficulty(selected);
+    setGameState("quiz"); // 🚀 this flips the view to quiz
+  };
 
   return (
-    <main style={{ padding: "1rem" }}>
-      <h1>AI Trivia</h1>
-      <QuestionList questionSet={questions ?? []} />
-    </main>
+    <div className={styles.pageContainer}>
+      <div className={styles.content}>
+        {gameState === "home" && <HomeScreen selectDifficulty={selectDifficulty} />}
+        {gameState === "quiz" && (
+          <QuizScreen />
+        )}
+      </div>
+    </div>
   );
 }

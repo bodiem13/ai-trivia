@@ -8,7 +8,19 @@ paths:
     get:
       operationId: listMultipleChoiceQuestions
       description: Get all questions
-      parameters: []
+      parameters:
+        - name: difficulty
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Models.MultipleChoiceQuestionDifficulty'
+          explode: false
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+          explode: false
       responses:
         '200':
           description: The request has succeeded.
@@ -70,6 +82,13 @@ components:
         type:
           $ref: '#/components/schemas/Models.MultipleChoiceQuestionType'
       description: Multiple choice question
+    Models.MultipleChoiceQuestionDifficulty:
+      type: string
+      enum:
+        - Easy
+        - Medium
+        - Hard
+      description: Difficulty for trivia questions
     Models.MultipleChoiceQuestionSet:
       type: object
       required:

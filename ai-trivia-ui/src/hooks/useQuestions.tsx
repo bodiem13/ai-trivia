@@ -17,6 +17,7 @@ export function useQuestions(difficulty?: Models_MultipleChoiceQuestionDifficult
         const result = await DefaultService.listMultipleChoiceQuestions({
           difficulty: difficulty ?? undefined,
         });
+        console.log("Result of API call:", result);
         if (mounted) setQuestions(result);
       } catch (err) {
         if (mounted) setError(err as Error);

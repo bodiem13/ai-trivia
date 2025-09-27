@@ -5,11 +5,12 @@ import styles from "./page.module.css";
 import { Models_MultipleChoiceQuestionDifficulty as Difficulty } from "../../packages/QuestionAPI/src";
 import HomeScreen from "@/screens/HomeScreen/HomeScreen";
 import QuizScreen from "@/screens/QuizScreen/QuizScreen";
+import { useTrivia } from "./providers/TriviaProvider";
 
 
 export default function Page() {
   const [gameState, setGameState] = useState<"home" | "quiz">("home");
-  const [difficulty, setDifficulty] = useState<string | null>(null);
+  const { setDifficulty } = useTrivia();
 
   const selectDifficulty = (selected: Difficulty) => {
     setDifficulty(selected);

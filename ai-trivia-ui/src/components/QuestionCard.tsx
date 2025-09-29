@@ -10,67 +10,64 @@ import {
   tokens,
 } from "@fluentui/react-components";
 import { Models_MultipleChoiceQuestion } from "../../packages/QuestionAPI/src/models/Models_MultipleChoiceQuestion";
+import styles from "./QuestionCard.module.css";
 
 type Props = {
   question: Models_MultipleChoiceQuestion;
   onSelect: (choice: string) => void;
-  selectedId? : string | null;
+  selectedId?: string | null;
   showNextQuestion: boolean;
   onNext: () => void;
   isLast: boolean;
 };
 
-export default function QuestionCard({ 
-  question, 
-  onSelect, 
-  selectedId, 
-  showNextQuestion, 
+export default function QuestionCard({
+  question,
+  onSelect,
+  selectedId,
+  showNextQuestion,
   onNext,
-  isLast }: Props) {
+  isLast,
+}: Props) {
   return (
-    <Card
-      style={{
-        marginBottom: "1rem",
-        padding: "1rem",
-        borderRadius: tokens.borderRadiusLarge,
-      }}
-    >
-      <CardHeader
-        header={<Text weight="semibold">{question.question}</Text>}
-      />
+    <Card className={styles.card}>
+      <CardHeader header={<Text weight="semibold">{question.question}</Text>} />
 
       <CardPreview>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <div className={styles.optionsContainer}>
           {question.options.map((option, idx) => {
-            let customStyle: React.CSSProperties = { justifyContent: "flex-start" };
+            const isSelected = selectedId === option.id;
+            const isCorrect = option.id === question.correctAnswer.id;
 
+            let optionClass = styles.option;
             if (selectedId) {
-              if (option.id === question.correctAnswer.id) {
-                customStyle = { ...customStyle, border: "2px solid green" };
-              } else if (option.id === selectedId && option.id !== question.correctAnswer.id) {
-                customStyle = { ...customStyle, border: "2px solid red" };
-              }
+              if (isCorrect) optionClass = `${styles.option} ${styles.correct}`;
+              else if (isSelected) optionClass = `${styles.option} ${styles.wrong}`;
             }
 
             return (
               <Button
-              key={idx}
-              appearance="secondary"
-              style={customStyle}
-              onClick={() => onSelect(option.id)}
-              disabled={!!selectedId}
-            >
-              {option.text}
-            </Button>
-            )
-          }
-          )}
+                key={idx}
+                appearance="secondary"
+                className={optionClass}
+                onClick={() => onSelect(option.id)}
+                disabled={!!selectedId}
+              >
+                {option.text}
+              </Button>
+            );
+          })}
         </div>
       </CardPreview>
 
-      <CardFooter>
+      <CardFooter className={styles.footer}>
         {showNextQuestion ? (
-          <Button appearance="primary" onClick={onNext} disabled={!selectedId}>
+          <Button
+            appearance="primary"
+            onClick={onNext}
+            disabled={!selectedId}
+            className={styles.nextBtn}
+          >
             {isLast ? "Finish" : "Next Question →"}
           </Button>
         ) : (

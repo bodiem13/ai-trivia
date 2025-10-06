@@ -7,51 +7,61 @@ import {
   CardFooter,
   Button,
   Text,
-  tokens,
 } from "@fluentui/react-components";
+import { useState } from "react";
 import { Models_MultipleChoiceQuestion } from "../../packages/QuestionAPI/src/models/Models_MultipleChoiceQuestion";
 import styles from "./QuestionCard.module.css";
 
 type Props = {
   question: Models_MultipleChoiceQuestion;
-  onSelect: (choice: string) => void;
-  selectedId?: string | null;
-  showNextQuestion: boolean;
   onNext: () => void;
   isLast: boolean;
 };
 
-export default function QuestionCard({
-  question,
-  onSelect,
-  selectedId,
-  showNextQuestion,
-  onNext,
-  isLast,
-}: Props) {
+export default function QuestionCard({ question, onNext, isLast }: Props) {
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSelect = (choiceId: string) => {
+    if (!submitted) setSelectedId(choiceId);
+  };
+
+  const handleSubmit = () => {
+    if (selectedId) setSubmitted(true);
+  };
+
+  const handleNext = () => {
+    setSelectedId(null);
+    setSubmitted(false);
+    onNext();
+  };
+
   return (
     <Card className={styles.card}>
       <CardHeader header={<Text weight="semibold">{question.question}</Text>} />
 
       <CardPreview>
         <div className={styles.optionsContainer}>
-          {question.options.map((option, idx) => {
+          {question.options.map((option) => {
             const isSelected = selectedId === option.id;
             const isCorrect = option.id === question.correctAnswer.id;
 
             let optionClass = styles.option;
-            if (selectedId) {
+            if (submitted) {
               if (isCorrect) optionClass = `${styles.option} ${styles.correct}`;
-              else if (isSelected) optionClass = `${styles.option} ${styles.wrong}`;
+              else if (isSelected && !isCorrect)
+                optionClass = `${styles.option} ${styles.wrong}`;
+            } else if (isSelected) {
+              optionClass = `${styles.option} ${styles.selected}`;
             }
 
             return (
               <Button
-                key={idx}
+                key={option.id}
                 appearance="secondary"
                 className={optionClass}
-                onClick={() => onSelect(option.id)}
-                disabled={!!selectedId}
+                onClick={() => handleSelect(option.id)}
+                disabled={submitted}
               >
                 {option.text}
               </Button>
@@ -61,20 +71,22 @@ export default function QuestionCard({
       </CardPreview>
 
       <CardFooter className={styles.footer}>
-        {showNextQuestion ? (
+        <div className={styles.footerButtons}>
           <Button
             appearance="primary"
-            onClick={onNext}
-            disabled={!selectedId}
-            className={styles.nextBtn}
+            disabled={!selectedId || submitted}
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
+          <Button
+            appearance="secondary"
+            disabled={!submitted}
+            onClick={handleNext}
           >
             {isLast ? "Finish" : "Next Question →"}
           </Button>
-        ) : (
-          <Text size={200} italic>
-            Select your answer
-          </Text>
-        )}
+        </div>
       </CardFooter>
     </Card>
   );

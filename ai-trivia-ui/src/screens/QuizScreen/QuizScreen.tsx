@@ -12,7 +12,6 @@ export default function QuizScreen() {
   const { questions, loading, error } = useQuestions(difficulty ?? undefined);
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selected, setSelected] = useState<string | null>(null);
   const [finished, setFinished] = useState(false);
 
   if (loading) return <div>Loading questions...</div>;
@@ -23,16 +22,11 @@ export default function QuizScreen() {
 
   const currentQuestion: Models_MultipleChoiceQuestion = questions.questions[currentIndex];
 
-  const handleSelect = (choiceId: string) => {
-    setSelected(choiceId);
-  };
-
   const handleNext = () => {
     if (isLast) {
       setFinished(true);
     }
     else{
-      setSelected(null);
       setCurrentIndex((i) => i + 1)
     }
   }
@@ -52,9 +46,6 @@ export default function QuizScreen() {
       <h1>AI Trivia - {difficulty}</h1>
       <QuestionCard 
         question={currentQuestion}
-        onSelect={handleSelect}
-        selectedId={selected}
-        showNextQuestion={!!selected}
         onNext={handleNext}
         isLast={isLast}
       />

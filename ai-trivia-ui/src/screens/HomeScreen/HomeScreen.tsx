@@ -34,23 +34,20 @@ export default function HomeScreen({ selectDifficulty }: HomeScreenProps) {
         <Button
           appearance="primary"
           size="large"
-          className={styles.button}
           onClick={() => selectDifficulty(Difficulty.EASY)}
         >
           🟢 Easy
         </Button>
         <Button
-          appearance="secondary"
+          appearance="primary"
           size="large"
-          className={styles.button}
           onClick={() => selectDifficulty(Difficulty.MEDIUM)}
         >
           🟡 Medium
         </Button>
         <Button
-          appearance="outline"
+          appearance="primary"
           size="large"
-          className={styles.button}
           onClick={() => selectDifficulty(Difficulty.HARD)}
         >
           🔴 Hard

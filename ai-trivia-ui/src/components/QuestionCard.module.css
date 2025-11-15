@@ -1,59 +1,92 @@
-.card {
-  margin-bottom: 1rem;
-  padding: 1rem;
-  border-radius: var(--borderRadiusLarge);
-}
-
-.optionsContainer {
+/* Container & layout */
+.radioGroup {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  padding: 4px;
+  gap: 10px;
   box-sizing: border-box;
+  /* Optional max width so cards don't become too wide on large screens */
+  max-width: 900px;
+}
+
+/* Outer row for each option: border, padding, responsive width */
+.optionRow,
+.correctRow,
+.wrongRow {
   width: 100%;
-}
-
-.option {
-  display: block;        /* ⬅️ IMPORTANT: make Fluent UI button behave like a block */
-  width: 100%;           /* ⬅️ ensures the button fills the container fully */
-  min-height: 56px;
-  justify-content: flex-start;
-  border-radius: var(--borderRadiusLarge);
-  border: 2px solid transparent;
-  transition: all 0.2s ease;
   box-sizing: border-box;
-  margin-bottom: 4px !important;
-}
-
-
-/* Hover state */
-.option:hover:not(:disabled) {
-  border-color: var(--colorNeutralStroke1Hover);
-  background-color: var(--colorNeutralBackground1Hover);
-}
-
-.option.selected {
-  background-color: var(--colorNeutralBackground1Pressed);
-}
-
-.option.correct {
-  border-color: green;
-  background-color: rgba(0, 200, 0, 0.15);
-}
-
-.option.wrong {
-  border-color: red;
-  background-color: rgba(200, 0, 0, 0.15);
-}
-
-.footer {
-  margin-top: 1rem;
+  padding: 12px 16px;               /* space around content */
+  border-radius: 10px;              /* smooth rounded corners */
+  border: 1px solid var(--colorNeutralStroke1);
+  background: var(--colorNeutralBackground1);
+  transition: background-color 150ms ease, border-color 150ms ease;
   display: flex;
-  justify-content: center;
+  align-items: center;
 }
 
+/* Make the Radio element itself take the full row so label alignment is stable */
+.radioFullWidth {
+  width: 100% !important;           /* ensure the radio + label span the row */
+  box-sizing: border-box;
+}
+
+/* Label row: contains the option text and optional icon on the far right */
+.labelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+
+/* Text area: will wrap if long, but keep radio circle aligned */
+.labelText {
+  flex: 1 1 auto;                   /* grow/shrink for variable text */
+  min-width: 0;                     /* allow truncation/wrapping inside flex */
+  color: var(--colorNeutralForeground1);
+  line-height: 1.3;
+  word-break: break-word;           /* avoid overflow with long words/urls */
+}
+
+/* Icon area (right side) */
+.labelIcon {
+  flex: 0 0 auto;
+  margin-left: 12px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Correct / wrong row visuals - use Fluent tokens where present */
+
+/* Correct (success) */
+.correctRow {
+  background-color: var(--colorStatusSuccessBackground2, rgba(0, 200, 0, 0.08));
+  border-color: var(--colorStatusSuccessBorderActive, rgba(0, 200, 0, 0.6));
+}
+/* Wrong (danger) */
+.wrongRow {
+  background-color: var(--colorStatusDangerBackground2, rgba(200, 0, 0, 0.06));
+  border-color: var(--colorStatusDangerBorderActive, rgba(200, 0, 0, 0.6));
+}
+
+/* Ensure readability of text/icons in colored rows (override disabled dimming) */
+.correctRow .labelText,
+.wrongRow .labelText,
+.correctRow .labelIcon,
+.wrongRow .labelIcon {
+  color: var(--colorNeutralForeground1) !important;
+  opacity: 1 !important;
+}
+
+/* Optional: subtle hover for unsubmitted options */
+.optionRow:hover {
+  border-color: var(--colorNeutralStroke1Hover);
+  background: var(--colorNeutralBackground1Hover);
+}
+
+/* Footer buttons spacing */
 .footerButtons {
   display: flex;
-  gap: 0.75rem;
-  width: 100%;
+  gap: 12px;
+  justify-content: flex-end;
 }

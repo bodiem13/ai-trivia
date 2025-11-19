@@ -1,0 +1,15 @@
+.footer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end; /* Right-justified by default */
+  padding-top: 16px;
+}
+
+.instructionsButton {
+  text-decoration: underline;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  color: var(--colorBrandForeground1);
+}

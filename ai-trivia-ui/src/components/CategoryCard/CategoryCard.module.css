@@ -1,0 +1,21 @@
+.card {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.description {
+  opacity: 0.85;
+}

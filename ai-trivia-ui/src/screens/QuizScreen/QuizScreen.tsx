@@ -5,7 +5,7 @@ import { useTrivia } from "@/app/providers/TriviaProvider";
 import { useQuestions } from "@/hooks/useQuestions";
 import { useState } from "react";
 import { Models_MultipleChoiceQuestion } from "../../../packages/QuestionAPI/src";
-import QuestionCard from "@/components/QuestionCard";
+import QuestionCard from "@/components/QuestionCard/QuestionCard";
 
 export default function QuizScreen() {
   const { difficulty } = useTrivia();

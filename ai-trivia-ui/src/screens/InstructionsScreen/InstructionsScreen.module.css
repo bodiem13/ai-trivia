@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.box {
+  width: 100%;
+  background: var(--colorNeutralBackground2);
+  padding: 16px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.scoringBox {
+  background: var(--colorNeutralBackground3);
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-top: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08); /* subtle pop */
+}
+
+.green { color: #008000; font-weight: 600; }
+.yellow { color: #DAA520; font-weight: 600; }
+.red { color: #B22222; font-weight: 600; }
+
+.backButton {
+  width: fit-content;
+  align-self: flex-start;
+  padding: 4px 12px;
+}

@@ -12,7 +12,7 @@ import {
 } from "@fluentui/react-components";
 import { Checkmark20Regular, Dismiss20Regular } from "@fluentui/react-icons";
 import { useState } from "react";
-import { Models_MultipleChoiceQuestion } from "../../packages/QuestionAPI/src/models/Models_MultipleChoiceQuestion";
+import { Models_MultipleChoiceQuestion } from "../../../packages/QuestionAPI/src/models/Models_MultipleChoiceQuestion";
 import styles from "./QuestionCard.module.css";
 
 type Props = {

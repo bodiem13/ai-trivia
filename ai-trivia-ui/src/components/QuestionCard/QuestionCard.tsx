@@ -10,35 +10,76 @@ import {
   Radio,
   Field,
 } from "@fluentui/react-components";
-import { Checkmark20Regular, Dismiss20Regular } from "@fluentui/react-icons";
+import {
+  Checkmark20Regular,
+  Dismiss20Regular,
+  Trophy20Regular,
+} from "@fluentui/react-icons";
 import { useState } from "react";
 import { Models_MultipleChoiceQuestion } from "../../../packages/QuestionAPI/src/models/Models_MultipleChoiceQuestion";
 import styles from "./QuestionCard.module.css";
+import { Models_MultipleChoiceQuestionDifficulty } from "../../../packages/QuestionAPI/src/models/Models_MultipleChoiceQuestionDifficulty";
 
 type Props = {
   question: Models_MultipleChoiceQuestion;
-  onNext: () => void;
+  onNext: (isCorrect: boolean) => void;
   isLast: boolean;
+  questionIndex: number;
+  totalQuestions: number;
+  difficulty: Models_MultipleChoiceQuestionDifficulty | null;
+  currentScore: number;
+  onAnswer: (wasCorrect: boolean) => void;
 };
 
-export default function QuestionCard({ question, onNext, isLast }: Props) {
-  const [selectedId, setSelectedId] = useState<string>(""); // controlled
+export default function QuestionCard({
+  question,
+  onNext,
+  isLast,
+  questionIndex,
+  totalQuestions,
+  difficulty,
+  currentScore,
+  onAnswer,
+}: Props) {
+  const [selectedId, setSelectedId] = useState<string>("");
   const [submitted, setSubmitted] = useState(false);
 
   const correctId = question.correctAnswer.id;
+  const isCorrectAnswer = selectedId === correctId;
 
   const handleSubmit = () => {
-    if (selectedId) setSubmitted(true);
+    if (selectedId) {
+      setSubmitted(true);
+      const wasCorrect = selectedId === correctId;
+      onAnswer(wasCorrect);  // notify parent QuizScreen
+    }
   };
+
 
   const handleNext = () => {
     setSelectedId("");
     setSubmitted(false);
-    onNext();
+    onNext(isCorrectAnswer);
   };
 
   return (
-    <Card>
+    <Card className={styles.card}>
+      {/* ✅ TOP STATUS BAR */}
+      <div className={styles.topBar}>
+        <Text size={300} weight="medium">
+          Question {questionIndex + 1} of {totalQuestions}
+        </Text>
+
+        <div className={styles.topRight}>
+          <span className={styles.difficultyBadge}>{difficulty}</span>
+
+          <span className={styles.score}>
+            <Trophy20Regular />
+            {currentScore} pts
+          </span>
+        </div>
+      </div>
+
       <CardHeader header={<Text weight="semibold">{question.question}</Text>} />
 
       <Field>
@@ -67,8 +108,6 @@ export default function QuestionCard({ question, onNext, isLast }: Props) {
                   label={
                     <div className={styles.labelRow}>
                       <span className={styles.labelText}>{option.text}</span>
-
-                      {/* show icon only after submit for clarity */}
                       <span className={styles.labelIcon}>
                         {submitted && isCorrect && <Checkmark20Regular />}
                         {submitted && isWrong && <Dismiss20Regular />}

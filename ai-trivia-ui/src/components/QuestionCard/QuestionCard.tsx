@@ -67,7 +67,7 @@ export default function QuestionCard({
       {/* ✅ TOP STATUS BAR */}
       <div className={styles.topBar}>
         <Text size={300} weight="medium">
-          Question {questionIndex + 1} of {totalQuestions}
+          Question {questionIndex} of {totalQuestions}
         </Text>
 
         <div className={styles.topRight}>

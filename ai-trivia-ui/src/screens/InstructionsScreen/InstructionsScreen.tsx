@@ -22,7 +22,7 @@ export default function InstructionsScreen({ onBack }: Props) {
           <Body1><strong>Scoring per question:</strong> 
             <span className={styles.green}> 🟢 Easy 1</span> | 
             <span className={styles.yellow}> 🟡 Medium 2</span> | 
-            <span className={styles.red}> 🔴 Hard 3</span>
+            <span className={styles.red}> 🔴 Hard 4</span>
           </Body1>
         </div>
       </div>

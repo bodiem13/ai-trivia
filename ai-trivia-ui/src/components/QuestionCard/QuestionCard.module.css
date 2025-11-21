@@ -90,3 +90,37 @@
   gap: 12px;
   justify-content: flex-end;
 }
+
+.card {
+  padding: 1rem;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.topRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.difficultyBadge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #eef3ff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.score {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+

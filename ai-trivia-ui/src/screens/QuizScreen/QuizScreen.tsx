@@ -6,37 +6,48 @@ import { useQuestions } from "@/hooks/useQuestions";
 import { useState } from "react";
 import { Models_MultipleChoiceQuestion } from "../../../packages/QuestionAPI/src";
 import QuestionCard from "@/components/QuestionCard/QuestionCard";
-
+import { getPointsForDifficulty } from "@/utilities/scoring";
 export default function QuizScreen() {
   const { difficulty } = useTrivia();
-  const { questions, loading, error } = useQuestions(difficulty ?? undefined);
+  if (!difficulty) {
+    throw new Error("Difficulty must be selected before starting the quiz.");
+  }
 
+  // Always at top level
   const [currentIndex, setCurrentIndex] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [score, setScore] = useState(0);
 
+  const { questions, loading, error } = useQuestions(difficulty);
+
+  // Early return for loading/error
   if (loading) return <div>Loading questions...</div>;
   if (error) return <div>Failed to load questions: {error.message}</div>;
   if (!questions) return <div>No questions found.</div>;
 
+  const currentQuestion = questions.questions[currentIndex];
   const isLast = currentIndex === questions.questions.length - 1;
 
-  const currentQuestion: Models_MultipleChoiceQuestion = questions.questions[currentIndex];
+  const handleNextQuestion = (wasCorrect: boolean) => {
+    if (wasCorrect) {
+      setScore(prev => prev + getPointsForDifficulty(difficulty));
+    }
+  };
 
   const handleNext = () => {
     if (isLast) {
       setFinished(true);
+    } else {
+      setCurrentIndex(prev => prev + 1);
     }
-    else{
-      setCurrentIndex((i) => i + 1)
-    }
-  }
+  };
 
   if (finished) {
     return (
       <main style={{ padding: "1rem" }}>
         <h1>AI Trivia - {difficulty}</h1>
         <h2>🎉 You’ve finished the quiz!</h2>
-        {/* Later: we can show score, summary, restart button, etc. */}
+        <p>Total Score: {score}</p>
       </main>
     );
   }
@@ -44,10 +55,15 @@ export default function QuizScreen() {
   return (
     <main style={{ padding: "1rem" }}>
       <h1>AI Trivia - {difficulty}</h1>
-      <QuestionCard 
+      <QuestionCard
         question={currentQuestion}
         onNext={handleNext}
         isLast={isLast}
+        questionIndex={currentIndex + 1}
+        totalQuestions={questions.questions.length}
+        difficulty={difficulty}
+        currentScore={score}
+        onAnswer={(wasCorrect: boolean) => handleNextQuestion(wasCorrect)}
       />
     </main>
   );

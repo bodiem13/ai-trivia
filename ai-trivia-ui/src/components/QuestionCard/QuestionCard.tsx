@@ -101,7 +101,22 @@ export default function QuestionCard({
               : styles.optionRow;
 
             return (
-              <div key={option.id} className={rowClass}>
+              <div
+                key={option.id}
+                className={`${rowClass} ${styles.clickableRow}`}
+                onClick={() => {
+                  if (!submitted) {
+                    setSelectedId(option.id);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if ((e.key === "Enter" || e.key === " ") && !submitted) {
+                    setSelectedId(option.id);
+                  }
+                }}
+              >
                 <Radio
                   value={option.id}
                   className={styles.radioFullWidth}

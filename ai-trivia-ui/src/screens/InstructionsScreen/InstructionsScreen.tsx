@@ -2,6 +2,7 @@
 
 import { Button, Title2, Body1 } from "@fluentui/react-components";
 import styles from "./InstructionsScreen.module.css";
+import { DIFFICULTY_CONFIG } from "@/config/difficultyConfig";
 
 interface Props {
   onBack: () => void;
@@ -20,9 +21,9 @@ export default function InstructionsScreen({ onBack }: Props) {
 
         <div className={styles.scoringBox}>
           <Body1><strong>Scoring per question:</strong> 
-            <span className={styles.green}> 🟢 Easy 1</span> | 
-            <span className={styles.yellow}> 🟡 Medium 2</span> | 
-            <span className={styles.red}> 🔴 Hard 4</span>
+            <span className={styles.green}> 🟢 {DIFFICULTY_CONFIG.Easy.displayName} {DIFFICULTY_CONFIG.Easy.points}</span> | 
+            <span className={styles.yellow}> 🟡 {DIFFICULTY_CONFIG.Medium.displayName} {DIFFICULTY_CONFIG.Medium.points}</span> | 
+            <span className={styles.red}> 🔴 {DIFFICULTY_CONFIG.Hard.displayName} {DIFFICULTY_CONFIG.Hard.points}</span>
           </Body1>
         </div>
       </div>

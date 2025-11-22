@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Models_MultipleChoiceQuestion } from "../../../packages/QuestionAPI/src";
 import QuestionCard from "@/components/QuestionCard/QuestionCard";
 import { getPointsForDifficulty } from "@/utilities/scoring";
+import FinishScreen from "../FinishScreen/FinishScreen";
 export default function QuizScreen() {
   const { difficulty } = useTrivia();
   if (!difficulty) {
@@ -44,11 +45,12 @@ export default function QuizScreen() {
 
   if (finished) {
     return (
-      <main style={{ padding: "1rem" }}>
-        <h1>AI Trivia - {difficulty}</h1>
-        <h2>🎉 You’ve finished the quiz!</h2>
-        <p>Total Score: {score}</p>
-      </main>
+      <FinishScreen 
+        score={score}
+        totalQuestions={questions.questions.length}
+        difficulty={difficulty}
+        onDone={() => window.location.href = "/"}
+      />
     );
   }
 

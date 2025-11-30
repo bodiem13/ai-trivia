@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, ReactNode } from "react";
+import './globals.css';
 import styles from "./page.module.css";
 
 import { Models_MultipleChoiceQuestionDifficulty as Difficulty } from "../../packages/QuestionAPI/src";

@@ -1,4 +1,5 @@
 ﻿using Core.QuestionAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuestionService;
 using QuestionService.Handlers;
@@ -7,6 +8,7 @@ namespace Apis.QuestionAPI
 {
     [ApiController]
     [Route("api/questions")]
+    [AllowAnonymous]
     public class QuestionController : ControllerBase
     {
         private readonly IAIQuestionService _aiQuestionService;

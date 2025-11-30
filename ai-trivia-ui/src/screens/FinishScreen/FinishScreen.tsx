@@ -32,7 +32,7 @@ export default function FinishScreen({
 
         <div className={styles.summary}>
           <Text size={500} weight="semibold">
-            Final Score: {score} / {maxScore}
+            Final Score: {score} pts
           </Text>
 
           <Text>Difficulty: {difficulty}</Text>

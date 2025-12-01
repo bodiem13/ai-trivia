@@ -32,7 +32,7 @@ if (builder.Environment.IsDevelopment())
 else
 {
     // Use real OpenAI generator in production
-    builder.Services.AddScoped<IOpenAIQuestionGenerator, OpenAIQuestionGenerator>();
+    builder.Services.AddScoped<IOpenAIQuestionGenerator, MockOpenAIQuestionGenerator>();
 }
 
 builder.Services.AddControllers();

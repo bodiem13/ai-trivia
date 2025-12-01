@@ -7,7 +7,7 @@ export const ApiProvider = ({ children }: { children: ReactNode }) => {
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    OpenAPI.BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://ai-trivia-webapp-dev-a0gpgaaseyfngdas.centralus-01.azurewebsites.net";
+    OpenAPI.BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://ai-trivia-webapp-dev-a0gpgaaseyfngdas.centralus-01.azurewebsites.net/api";
     OpenAPI.WITH_CREDENTIALS = false;
 
     console.log("OpenAPI.BASE initialized:", OpenAPI.BASE);

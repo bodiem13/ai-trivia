@@ -18,7 +18,9 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy
-                .WithOrigins("http://localhost:3000") // Your Next.js dev URL
+                .WithOrigins(
+                    "http://localhost:3000",
+                    "https://ai-trivia-webapp-dev-a0gpgaaseyfngdas.centralus-01.azurewebsites.net") // Your Next.js dev URL
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });

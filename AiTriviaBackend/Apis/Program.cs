@@ -20,7 +20,8 @@ builder.Services.AddCors(options =>
             policy
                 .WithOrigins(
                     "http://localhost:3000",
-                    "https://ai-trivia-webapp-dev-a0gpgaaseyfngdas.centralus-01.azurewebsites.net") // Your Next.js dev URL
+                    "https://gentle-glacier-0aa45030f.3.azurestaticapps.net",
+                    "https://ai-trivia-webapp-dev-a0gpgaaseyfngdas.centralus-01.azurewebsites.net")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });

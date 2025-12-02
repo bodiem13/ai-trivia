@@ -21,26 +21,50 @@ namespace Apis.QuestionAPI
         }
 
         [HttpGet]
-        public ActionResult<MultipleChoiceQuestionSet> GetQuestion(
+        public async Task<ActionResult<MultipleChoiceQuestionSet>> GetQuestion(
             [FromQuery] string? difficulty,
             [FromQuery] string? category)
         {
-            var question = _aiQuestionService.GetOrGenerateTodayQuestionAsync().Result;
-            return question;
-        }
-
-        [HttpGet("health-check")]
-        public async Task<IActionResult> HealthCheck()
-        {
             try
             {
-                var completion = await _openAIQuestionGenerator.GenerateMultipleChoiceQuestionSetAsync(MultipleChoiceQuestionType.Standard, "science", "easy", 1);
-                return Ok(new { success = true, question = completion });
+                if (Environment.GetEnvironmentVariable("USE_MOCK") == "true")
+                {
+                    return Ok(new
+                    {
+                        question = "What planet is known as the Red Planet?",
+                        choices = new[] { "Earth", "Mars", "Jupiter", "Venus" },
+                        answer = "Mars"
+                    });
+                }
+
+                var question = await _aiQuestionService.GetOrGenerateTodayQuestionAsync();
+                if (question == null)
+                    return NotFound(new { success = false, error = "No question generated" });
+
+                return Ok(question);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { success = false, error = ex.Message });
             }
+        }
+
+        [HttpGet("health-check")]
+        public async Task<IActionResult> HealthCheck()
+        {
+            return Ok(new
+            {
+                success = true,
+                environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
+                serverTimeUtc = DateTime.UtcNow,
+                message = "✅ API is alive and returning mock data",
+                sampleQuestion = new
+                {
+                    question = "What planet is known as the Red Planet?",
+                    choices = new[] { "Earth", "Mars", "Jupiter", "Venus" },
+                    answer = "Mars"
+                }
+            });
         }
     }
 }

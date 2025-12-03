@@ -1,4 +1,5 @@
 using Azure.AI.OpenAI;
+using Azure.Storage.Blobs;
 using OpenAI.Chat;
 using QuestionService;
 using QuestionService.Handlers;
@@ -43,6 +44,16 @@ builder.Services.AddSingleton<ChatClient>(sp =>
 
     return client.GetChatClient(deployment);
 });
+
+builder.Services.AddSingleton(sp =>
+{
+    var connectionString = builder.Configuration["STORAGE_CONNECTION"];
+    var containerName = builder.Configuration["STORAGE_CONTAINER"];
+    var containerClient = new BlobContainerClient(connectionString, containerName);
+    containerClient.CreateIfNotExists(); // ensures container exists
+    return containerClient;
+});
+
 
 
 if (builder.Environment.IsDevelopment())

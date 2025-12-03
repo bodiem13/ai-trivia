@@ -1,6 +1,8 @@
-﻿using OpenAI.Chat;
-using Core.QuestionAPI.Models;
+﻿using Core.QuestionAPI.Models;
+using OpenAI.Chat;
 using QuestionService.Helpers;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace QuestionService.Handlers
 {
@@ -34,8 +36,18 @@ namespace QuestionService.Handlers
 
             var completion = response.Content[0].Text;
 
-            // TODO test serializer
-            var trivia = System.Text.Json.JsonSerializer.Deserialize<MultipleChoiceQuestionSet>(completion);
+            // must add enum converter since tsp does not support json converters or attributes 
+            var trivia = JsonSerializer.Deserialize<MultipleChoiceQuestionSet>(
+                completion,
+                new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                    Converters =
+                    {
+                        new JsonStringEnumConverter()
+                    }
+                }
+            );
 
             return trivia;
         }

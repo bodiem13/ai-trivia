@@ -1,4 +1,5 @@
 using Azure.AI.OpenAI;
+using OpenAI.Chat;
 using QuestionService;
 using QuestionService.Handlers;
 using QuestionService.Helpers;
@@ -21,7 +22,7 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddSingleton(sp =>
+builder.Services.AddSingleton<ChatClient>(sp =>
 {
     var endpoint = builder.Configuration["OPENAI_ENDPOINT"];
     var apiKey = builder.Configuration["OPENAI_API_KEY"];

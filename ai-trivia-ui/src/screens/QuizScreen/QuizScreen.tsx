@@ -19,7 +19,7 @@ export default function QuizScreen() {
   const [finished, setFinished] = useState(false);
   const [score, setScore] = useState(0);
 
-  const { questions, loading, error } = useQuestions(difficulty);
+  const { questions, loading, error } = useQuestions(difficulty, "General");
 
   // Early return for loading/error
   if (loading) return <div>Loading questions...</div>;

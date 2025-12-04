@@ -37,7 +37,7 @@ namespace Apis.QuestionAPI
                     });
                 }
 
-                var question = await _aiQuestionService.GetOrGenerateTodayQuestionAsync();
+                var question = await _aiQuestionService.GetOrGenerateTodayQuestionAsync(5, "Sports", "Easy");
                 if (question == null)
                     return NotFound(new { success = false, error = "No question generated" });
 

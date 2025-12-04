@@ -1,23 +1,21 @@
 ﻿using Core.QuestionAPI.Models;
 using QuestionService.Handlers;
 
-namespace QuestionService;
-
-public class AIQuestionService : IAIQuestionService
+namespace QuestionService
 {
-    private readonly IQuestionHandler _questionHandler;
-    public AIQuestionService(IQuestionHandler questionHandler)
+    public class AIQuestionService : IAIQuestionService
     {
-        _questionHandler = questionHandler;
-    }
+        private readonly IQuestionHandler _questionHandler;
 
-    public async Task<MultipleChoiceQuestionSet> GetOrGenerateTodayQuestionAsync()
-    {
-        return await _questionHandler.GetOrGenerateTodayQuestionAsync();
-    }
+        public AIQuestionService(
+            IQuestionHandler questionHandler)
+        {
+            _questionHandler = questionHandler;
+        }
 
-    public bool CheckAnswer(MultipleChoiceQuestion question, string answer)
-    {
-        return question.CorrectAnswer.Text.Equals(answer, StringComparison.OrdinalIgnoreCase);
+        public async Task<MultipleChoiceQuestionSet> GetOrGenerateTodayQuestionAsync(int questionCount = 5, string category = "General", string difficulty = "Easy")
+        {
+            return await _questionHandler.GetOrGenerateTodayQuestionAsync(questionCount, category, difficulty);
+        }
     }
 }

@@ -1,6 +1,7 @@
-﻿using Core.QuestionAPI.Models;
-using Azure.Storage.Blobs;
+﻿using Azure.Storage.Blobs;
+using Core.QuestionAPI.Models;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace QuestionService.Handlers
 {
@@ -56,11 +57,19 @@ namespace QuestionService.Handlers
         private async Task SaveToStorageAsync(string fileName, MultipleChoiceQuestionSet questionSet)
         {
             var blob = _container.GetBlobClient(fileName);
-            var json = JsonSerializer.Serialize(questionSet);
-            using var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(json));
 
+            // Serialize using camelCase for frontend compatibility
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            var json = JsonSerializer.Serialize(questionSet, options);
+
+            using var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(json));
             await blob.UploadAsync(stream, overwrite: true);
         }
+
 
         private async Task<MultipleChoiceQuestionSet?> GetFromStorageAsync(string fileName)
         {

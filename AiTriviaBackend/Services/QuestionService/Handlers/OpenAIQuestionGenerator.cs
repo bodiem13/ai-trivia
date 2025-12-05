@@ -41,7 +41,7 @@ namespace QuestionService.Handlers
                 completion,
                 new JsonSerializerOptions
                 {
-                    PropertyNameCaseInsensitive = true,
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                     Converters =
                     {
                         new JsonStringEnumConverter()

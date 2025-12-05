@@ -1,7 +1,9 @@
-﻿using Core.QuestionAPI.Models;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Core.QuestionAPI.Models;
 using Moq;
-using QuestionService.Handlers;
 using NUnit.Framework;
+using QuestionService.Handlers;
 
 namespace QuestionService.Tests;
 
@@ -9,13 +11,15 @@ namespace QuestionService.Tests;
 public class QuestionHandlerTests
 {
     private Mock<IOpenAIQuestionGenerator> _mockGenerator;
+    private Mock<BlobContainerClient> _mockContainerClient;
     private QuestionHandler _handler;
 
     [SetUp]
     public void Setup()
     {
         _mockGenerator = new Mock<IOpenAIQuestionGenerator>();
-        _handler = new QuestionHandler(_mockGenerator.Object);
+        _mockContainerClient = new Mock<BlobContainerClient>();
+        _handler = new QuestionHandler(_mockGenerator.Object, _mockContainerClient.Object);
     }
 
     [Test]
@@ -52,7 +56,7 @@ public class QuestionHandlerTests
             .ReturnsAsync(fakeQuestions);
 
         // Act
-        var result = await _handler.GetOrGenerateTodayQuestionAsync();
+        var result = await _handler.GetOrGenerateTodayQuestionAsync(2, "General", "Easy");
 
         // Assert
         Assert.That(result, Is.Not.Null);

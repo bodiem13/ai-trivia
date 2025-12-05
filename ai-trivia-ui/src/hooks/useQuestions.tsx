@@ -8,39 +8,34 @@ import {
 } from "../../packages/QuestionAPI/src";
 
 export function useQuestions(
-  cdnHost: string,
-  difficulty?: Models_MultipleChoiceQuestionDifficulty
+  difficulty: Models_MultipleChoiceQuestionDifficulty
 ) {
   const [questions, setQuestions] = useState<Models_MultipleChoiceQuestionSet | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    if (!cdnHost) {
-      setError(new Error("CDN host is missing"));
-      setLoading(false);
-      return;
-    }
 
     let mounted = true;
 
     const fetchQuestions = async () => {
       try {
-        // Normalize host → full URL
-        const BASE = cdnHost.startsWith("http")
-          ? cdnHost
-          : `https://${cdnHost}`;
+        // Ensure proper protocol
+        const cdnHost = process.env.NEXT_PUBLIC_CDN_ENDPOINT_HOSTNAME as string;
 
-        const today = new Date().toISOString().split("T")[0]; // yyyy-mm-dd
-        const fileName = difficulty
-          ? `questions-${difficulty.toLowerCase()}.json`
-          : `questions.json`;
+        const BASE = cdnHost.startsWith("http") ? cdnHost : `https://${cdnHost}`;
 
-        const url = `${BASE}/questions/${today}/${fileName}`;
+        // Format date folder: yyyy-MM-dd
+        const today = new Date().toISOString().split("T")[0];
 
-        const res = await fetch(url, {
-          cache: "no-store"
-        });
+        // Determine file by difficulty; default to 'easy' if not provided
+        const diff = difficulty?.toLowerCase() ?? "easy";
+        const fileName = `${diff}.json`;
+
+        // Build full path: <cdnHost>/<date>/<difficulty>.json
+        const url = `${BASE}/${today}/${fileName}`;
+
+        const res = await fetch(url, { cache: "no-store" });
 
         if (!res.ok) {
           throw new Error(`CDN fetch failed: ${res.status}`);
@@ -49,7 +44,6 @@ export function useQuestions(
         const data: Models_MultipleChoiceQuestionSet = await res.json();
 
         if (mounted) setQuestions(data);
-
       } catch (err) {
         if (mounted) setError(err as Error);
       } finally {
@@ -62,7 +56,7 @@ export function useQuestions(
     return () => {
       mounted = false;
     };
-  }, [cdnHost, difficulty]);
+  }, [difficulty]);
 
   return { questions, loading, error };
 }

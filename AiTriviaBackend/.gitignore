@@ -49,3 +49,6 @@ TestResults/
 
 # IIS / Debug
 launchSettings.json
+
+# build output folder
+AiTriviaBackend/publish/

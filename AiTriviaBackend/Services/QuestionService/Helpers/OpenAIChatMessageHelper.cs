@@ -43,6 +43,7 @@ namespace QuestionService.Helpers
             "{\"questions\":[{\"id\":\"uuid\",\"question\":\"text\",\"options\":[{\"id\":\"A\",\"text\":\"...\"},{\"id\":\"B\",\"text\":\"...\"},{\"id\":\"C\",\"text\":\"...\"},{\"id\":\"D\",\"text\":\"...\"}],\"correctAnswer\":{\"id\":\"A\",\"text\":\"...\"},\"type\":\"Opinion\"}]}\n\n" +
             $"Rules:\n" +
             $"- Generate exactly {questionCount} questions\n" +
+            "- Questions must start with \"According to AI,\"" +
             "- Exactly 4 options: A, B, C, D\n" +
             "- correctAnswer must match one option exactly\n" +
             "- id must be UUID v4\n" +

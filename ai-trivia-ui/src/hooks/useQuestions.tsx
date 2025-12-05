@@ -33,7 +33,7 @@ export function useQuestions(
         const fileName = `${diff}.json`;
 
         // Build full path: <cdnHost>/<date>/<difficulty>.json
-        const url = `${BASE}/${today}/${fileName}`;
+        const url = `${BASE}/questions/${today}/${fileName}`;
 
         const res = await fetch(url, { cache: "no-store" });
 
